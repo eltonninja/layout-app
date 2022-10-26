@@ -42,6 +42,7 @@ export const Layout: React.FC<LayoutProps> = ({
           verticalSpacing,
           columns,
           breakpoints,
+          stretch: horizontalAlign === 'stretch',
         })
       })}
     </div>
@@ -56,6 +57,7 @@ type LayoutItemProps = {
   size?: Size
   horizontalSpacing?: number
   verticalSpacing?: number
+  stretch?: boolean
   columns?: number
   breakpoints?: object
   className?: string
@@ -67,6 +69,7 @@ export const LayoutItem: React.FC<LayoutItemProps> = ({
   size = {},
   horizontalSpacing = 0,
   verticalSpacing = 0,
+  stretch = false,
   columns = 12,
   breakpoints = {},
   className,
@@ -106,7 +109,7 @@ export const LayoutItem: React.FC<LayoutItemProps> = ({
     }
   }, [breakpoints, mediaMatches])
 
-  let sizeToShow = size.default || columns
+  let sizeToShow = size.default
   const breakpointKeys = Object.keys(breakpoints)
     .reverse()
     .sort((i, j) =>
@@ -123,8 +126,10 @@ export const LayoutItem: React.FC<LayoutItemProps> = ({
     <div
       style={{
         position: 'relative',
-        flex: '0 0 auto',
-        width: `${(sizeToShow / columns) * 100}%`,
+        flex: `${stretch ? 1 : 0} 0 auto`,
+        width: `${
+          !sizeToShow ? 'inherit' : (sizeToShow / columns) * 100 + '%'
+        }`,
         paddingLeft: horizontalSpacing ? horizontalSpacing / 2 : 0,
         paddingRight: horizontalSpacing ? horizontalSpacing / 2 : 0,
         marginInline: 0,
