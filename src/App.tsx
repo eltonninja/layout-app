@@ -10,7 +10,7 @@ function App() {
           textAlign: 'center',
         }}
       >
-        Columns: 12
+        Columns: 12, HorizontalSpacing: 30, VerticalSpacing: 50
       </div>
       <Layout
         horizontalAlign="center"
@@ -47,12 +47,12 @@ function App() {
           textAlign: 'center',
         }}
       >
-        Columns: 100
+        Columns: 100, HorizontalSpacing: 50, VerticalSpacing: 50
       </div>
       <Layout
         horizontalAlign="center"
         verticalAlign="center"
-        horizontalSpacing={30}
+        horizontalSpacing={50}
         verticalSpacing={50}
         columns={100}
       >
