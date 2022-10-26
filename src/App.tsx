@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
+import { css } from '@emotion/css'
 import { Layout, LayoutItem } from './layout'
 import './App.css'
 
@@ -18,11 +19,11 @@ function App() {
   return (
     <div>
       <div
-        style={{
+        className={css({
           position: 'absolute',
           right: 10,
           bottom: 10,
-        }}
+        })}
       >
         <label>
           Enable Modify:
@@ -34,7 +35,7 @@ function App() {
           />
         </label>
       </div>
-      <div style={{ display: changeable ? 'block' : 'none' }}>
+      <div className={css({ display: changeable ? 'block' : 'none' })}>
         <label className="block m-3">
           Columns:
           <input

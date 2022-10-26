@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
+import { css } from '@emotion/css'
 
 type LayoutProps = {
   horizontalAlign?: 'start' | 'end' | 'center' | 'stretch'
@@ -26,14 +27,13 @@ export const Layout: React.FC<LayoutProps> = ({
 }) => {
   return (
     <div
-      className={className}
-      style={{
+      className={`${css({
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: horizontalAlign,
         alignContent: verticalAlign,
         ...style,
-      }}
+      })} ${className || ''}`}
       {...props}
     >
       {React.Children.map(children, (child) => {
@@ -122,7 +122,7 @@ export const LayoutItem: React.FC<LayoutItemProps> = ({
 
   return (
     <div
-      style={{
+      className={css({
         position: 'relative',
         flex: `${stretch ? 1 : 0} 0 auto`,
         width: `${
@@ -133,7 +133,7 @@ export const LayoutItem: React.FC<LayoutItemProps> = ({
         marginInline: 0,
         marginBlock: verticalSpacing / 2,
         ...style,
-      }}
+      })}
       {...props}
     >
       {children}
