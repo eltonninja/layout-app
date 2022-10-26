@@ -6,7 +6,7 @@ type LayoutProps = {
   horizontalSpacing?: number
   verticalSpacing?: number
   columns?: number
-  breakpoints?: object
+  breakpoints?: { [k: string]: number }
   className?: string
   style?: object
   children: React.ReactNode
@@ -59,7 +59,7 @@ type LayoutItemProps = {
   verticalSpacing?: number
   stretch?: boolean
   columns?: number
-  breakpoints?: object
+  breakpoints?: { [k: string]: number }
   className?: string
   style?: object
   children: React.ReactNode
@@ -77,13 +77,13 @@ export const LayoutItem: React.FC<LayoutItemProps> = ({
   children,
   ...props
 }) => {
-  const mediaMatches = useMemo(
+  const mediaMatches: { [k: string]: MediaQueryList } = useMemo(
     () => getMediaMatchesFromBreakpoints(breakpoints),
     [breakpoints]
   )
 
-  const [matches, setMatches] = useState(() => {
-    const initialMatches: any = {}
+  const [matches, setMatches] = useState<{ [k: string]: boolean }>(() => {
+    const initialMatches: { [k: string]: boolean } = {}
     for (const breakpoint in breakpoints) {
       initialMatches[breakpoint] = mediaMatches[breakpoint].matches
     }
@@ -91,10 +91,10 @@ export const LayoutItem: React.FC<LayoutItemProps> = ({
   })
 
   useEffect(() => {
-    const handlers: any = {}
+    const handlers: { [k: string]: (e: MediaQueryListEvent) => void } = {}
     for (const breakpoint in breakpoints) {
-      const handler = (e: any) => {
-        setMatches((matches: any) => ({
+      const handler = (e: MediaQueryListEvent) => {
+        setMatches((matches: { [k: string]: boolean }) => ({
           ...matches,
           [breakpoint]: e.matches,
         }))
@@ -112,9 +112,7 @@ export const LayoutItem: React.FC<LayoutItemProps> = ({
   let sizeToShow = size.default
   const breakpointKeys = Object.keys(breakpoints)
     .reverse()
-    .sort((i, j) =>
-      (breakpoints as any)[i] < (breakpoints as any)[j] ? 1 : -1
-    )
+    .sort((i, j) => (breakpoints[i] < breakpoints[j] ? 1 : -1))
   for (const breakpoint of breakpointKeys) {
     if (matches[breakpoint] && size[breakpoint]) {
       sizeToShow = size[breakpoint]
@@ -143,8 +141,8 @@ export const LayoutItem: React.FC<LayoutItemProps> = ({
   )
 }
 
-function getMediaMatchesFromBreakpoints(breakpoints: any) {
-  const mediaMatches: any = {}
+function getMediaMatchesFromBreakpoints(breakpoints: { [k: string]: number }) {
+  const mediaMatches: { [k: string]: MediaQueryList } = {}
   for (const breakpoint in breakpoints) {
     mediaMatches[breakpoint] = window.matchMedia(
       `(min-width: ${breakpoints[breakpoint]}px)`

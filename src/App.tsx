@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { Layout, LayoutItem } from './layout'
 import './App.css'
 
 function App() {
-  const [changeable, setChangeable] = useState(false)
+  const [changeable, setChangeable] = useState<boolean>(false)
 
-  const [columns, setColumns] = useState(100)
-  const [horizontalSpacing, setHorizontalSpacing] = useState(50)
-  const [verticalSpacing, setVerticalSpacing] = useState(30)
-  const [horizontalAlign, setHorizontalAlign] = useState('start')
-  const [verticalAlign, setVerticalAlign] = useState('start')
+  const [columns, setColumns] = useState<number>(100)
+  const [horizontalSpacing, setHorizontalSpacing] = useState<number>(50)
+  const [verticalSpacing, setVerticalSpacing] = useState<number>(30)
+  const [horizontalAlign, setHorizontalAlign] = useState<
+    'start' | 'end' | 'center' | 'stretch'
+  >('start')
+  const [verticalAlign, setVerticalAlign] = useState<
+    'start' | 'end' | 'center' | 'stretch'
+  >('start')
 
   return (
     <div>
@@ -36,7 +40,9 @@ function App() {
           <input
             type="number"
             value={columns}
-            onChange={(e: any) => setColumns(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setColumns(parseInt(e.target.value))
+            }
             className="bg-gray-300 ml-3"
           ></input>
         </label>
@@ -45,7 +51,9 @@ function App() {
           <input
             type="number"
             value={horizontalSpacing}
-            onChange={(e: any) => setHorizontalSpacing(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setHorizontalSpacing(parseInt(e.target.value))
+            }
             className="bg-gray-300 ml-3"
           ></input>
         </label>
@@ -54,7 +62,9 @@ function App() {
           <input
             type="number"
             value={verticalSpacing}
-            onChange={(e: any) => setVerticalSpacing(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setVerticalSpacing(parseInt(e.target.value))
+            }
             className="bg-gray-300 ml-3"
           ></input>
         </label>
@@ -62,7 +72,9 @@ function App() {
           HorizontalAlign:
           <select
             value={horizontalAlign}
-            onChange={(e: any) => setHorizontalAlign(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+              setHorizontalAlign(e.target.value as any)
+            }
             className="bg-gray-300 ml-3"
           >
             <option value="start">start</option>
@@ -75,7 +87,9 @@ function App() {
           VerticalAlign:
           <select
             value={verticalAlign}
-            onChange={(e: any) => setVerticalAlign(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+              setVerticalAlign(e.target.value as any)
+            }
             className="bg-gray-300 ml-3"
           >
             <option value="start">start</option>
